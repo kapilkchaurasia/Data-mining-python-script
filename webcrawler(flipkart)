@@ -1,0 +1,39 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+
+def trade_spider(max_pages):
+    page = 1
+    while page <= max_pages:
+        url = "http://www.flipkart.com" 
+        source_code = requests.get(url)
+        # just get the code, no headers or anything
+        plain_text = source_code.text
+        # BeautifulSoup objects can be sorted through easy
+        soup = BeautifulSoup(plain_text)
+        for link in soup.findAll('div', {'class': 'tab-content'}):
+            print '1'
+            for links in link.findAll('ul',{'class':'unit size1of5 menu-column even'}):
+                print '2'
+                for linkss in links.findAll('li',{'class':'heading'}):
+                    for linksss in linkss.findAll('a'):
+                        s=linksss.string
+                        print s
+              
+        page += 1
+
+
+# def get_single_item_data(item_url):
+#     source_code = requests.get(item_url)
+#     plain_text = source_code.text
+#     soup = BeautifulSoup(plain_text)
+#     # if you want to gather information from that page
+#     for item_name in soup.findAll('div', {'class': 'i-name'}):
+#         print(item_name.string)
+#     # if you want to gather links for a web crawler
+#     for link in soup.findAll('a'):
+#         href = "https://geeksforgeeks.org" + link.get('href')
+#         print(href)
+
+
+trade_spider(1)
